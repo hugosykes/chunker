@@ -1,18 +1,20 @@
-package main
+package chunker
+
+func main() {}
 
 func ToChunks(toBeChunked string, noOfBytes int) [][]byte {
 	var chunks [][]byte
 
 	f := []byte(toBeChunked)
 	prev := 0
-	times := float64(len(f))/float64(noOfBytes)
+	times := float64(len(f)) / float64(noOfBytes)
 
 	if times != float64(int(times)) {
 		times = float64(int(times) + 1)
 	}
 
-	for i := 0; i < int(times) ; i++ {
-		b := f[prev:prev + noOfBytes]
+	for i := 0; i < int(times); i++ {
+		b := f[prev : prev+noOfBytes]
 		chunks = append(chunks, []byte(string(b)))
 		prev += noOfBytes
 	}
@@ -39,5 +41,5 @@ func RemoveTrailingZeros(arr []byte) []byte {
 		}
 	}
 
-	return arr[:len(arr) - zeros]
+	return arr[:len(arr)-zeros]
 }

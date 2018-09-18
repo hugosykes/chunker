@@ -1,13 +1,14 @@
-package main
+package chunker
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
-	"fmt"
+	"testing"
 )
 
 func TestShouldChunkText(t *testing.T) {
-	chunks := ToChunks("1234567890", 4)
-	fmt.Println(FromChunks(chunks))
-	assert.True(t, "1234567890" == FromChunks(chunks))
+	str := "sdpoifgj npowi4uvtnp349t8cnw;sfgimxao;ijncw;omgw;ot3i5vngw;p3o4jmvsehrngvs"
+
+	chunks := ToChunks(str, 4)
+
+	assert.True(t, str == FromChunks(chunks))
 }
