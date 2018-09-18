@@ -1,64 +1,40 @@
 package main
 
 import (
-	"bufio"
-	"flag"
 	"fmt"
-	"log"
-	"os"
-	"io"
 )
 
 func main() {
-	chunks := toChunks()
-	fromChunks(chunks)
+	chunks := toChunks("11231", 4)
+	fmt.Println(chunks)
+	fmt.Println(fromChunks(chunks))
 }
 
-func toChunks() [][]byte {
+func toChunks(toBeChunked string, noOfBytes int) [][]byte {
 	var chunks [][]byte
-	noOfBytes := 4
 
-	fptr := flag.String("fpath", "test.txt", "file path to read from")
-	flag.Parse()
+	f := []byte(toBeChunked)
+	prev := 0
+	times := float64(len(f))/float64(noOfBytes)
 
-	f, err := os.Open(*fptr)
-	if err != nil {
-		log.Fatal(err)
+	if times != float64(int(times)) {
+		times = float64(int(times) + 1)
 	}
-	defer func() {
-		if err = f.Close(); err != nil {
-			log.Fatal(err)
-		}
-	}()
 
-	l, _ := f.Stat()
-	size := int(l.Size())
-	r := bufio.NewReader(f)
-	b := make([]byte, noOfBytes)
-
-	for i := 0; i < ((size/noOfBytes) + 1) ; i++ {
-		num, err := r.Read(b)
-		if num != noOfBytes && num != 0 {
-			b = b[0:num-1]
-		}
-
-		if err != nil {
-			if err != io.EOF {
-				fmt.Println("Error reading file:", err)
-			}
-			break
-		}
+	for i := 0; i < int(times) ; i++ {
+		b := f[prev:prev + noOfBytes]
 		chunks = append(chunks, []byte(string(b)))
+		prev += noOfBytes
 	}
 	return chunks
 }
 
-func fromChunks(b [][]byte) string {
+func fromChunks(toBeUnchunked [][]byte) string {
 	var unChunked []byte
 
-	for i := 0; i < len(b); i++ {
-		for j := 0; j < len(b[i]); j++ {
-			unChunked = append(unChunked, b[i][j])
+	for i := 0; i < len(toBeUnchunked); i++ {
+		for j := 0; j < len(toBeUnchunked[i]); j++ {
+			unChunked = append(unChunked, toBeUnchunked[i][j])
 		}
 	}
 	return string(unChunked)
