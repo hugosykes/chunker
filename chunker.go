@@ -1,15 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
-
-func main() {
-	chunks := ToChunks("1234567890", 4)
-	fmt.Println(chunks)
-	fmt.Println(FromChunks(chunks))
-}
-
 func ToChunks(toBeChunked string, noOfBytes int) [][]byte {
 	var chunks [][]byte
 
