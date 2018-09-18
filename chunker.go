@@ -5,12 +5,12 @@ import (
 )
 
 func main() {
-	chunks := toChunks("11231", 4)
+	chunks := ToChunks("1234567890", 4)
 	fmt.Println(chunks)
-	fmt.Println(fromChunks(chunks))
+	fmt.Println(FromChunks(chunks))
 }
 
-func toChunks(toBeChunked string, noOfBytes int) [][]byte {
+func ToChunks(toBeChunked string, noOfBytes int) [][]byte {
 	var chunks [][]byte
 
 	f := []byte(toBeChunked)
@@ -29,7 +29,7 @@ func toChunks(toBeChunked string, noOfBytes int) [][]byte {
 	return chunks
 }
 
-func fromChunks(toBeUnchunked [][]byte) string {
+func FromChunks(toBeUnchunked [][]byte) string {
 	var unChunked []byte
 
 	for i := 0; i < len(toBeUnchunked); i++ {
@@ -37,5 +37,17 @@ func fromChunks(toBeUnchunked [][]byte) string {
 			unChunked = append(unChunked, toBeUnchunked[i][j])
 		}
 	}
-	return string(unChunked)
+
+	return string(RemoveTrailingZeros(unChunked))
+}
+
+func RemoveTrailingZeros(arr []byte) []byte {
+	zeros := 0
+	for i := 0; i < len(arr); i++ {
+		if arr[i] == 0 {
+			zeros++
+		}
+	}
+
+	return arr[:len(arr) - zeros]
 }
