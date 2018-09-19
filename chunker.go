@@ -18,7 +18,7 @@ func ToChunks(toBeChunked string, noOfBytes int) [][]byte {
 		chunks = append(chunks, []byte(string(b)))
 		prev += noOfBytes
 		if prev + noOfBytes > len(bytesToBeChunked) {
-			prev = len(bytesToBeChunked) - noOfBytes
+			noOfBytes = len(bytesToBeChunked) - prev
 		}
 	}
 	return chunks
